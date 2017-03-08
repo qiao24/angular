@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" ng-app="aa">
+<head>
+	<meta charset="UTF-8" />
+	<script src="jquery-1.11.3.js"></script>
+	<script src="angular.js"></script>
+	<script src="angular-animate.js"></script>
+	<script src="new.js"></script>
+	<script src="index.js"></script>
+	<link rel="stylesheet" href="index.css" />
+	<title>提醒计划</title>
+</head>
+<body ng-controller="bb">
+	<div class="zuo">
+		<div class="tit">
+			<div class="yi">iCloud</div>
+			<div class="er">提醒事项</div>
+			<div class="san" ng-click="add($index);save()">
+				<div class="xian1"></div>
+				<div class="xian2"></div>
+			</div>
+		</div>
+		<div class="naozhong">
+			<div class="nao"></div>
+			<div class="jihua">已计划</div>
+		</div>
+		<ul class="tiaomu">
+			<li class="neirong" ng-repeat="v in shuju track by v.id">
+				<div class="dian" ng-class="v.yanse"></div>
+				<input type="text" ng-model="v.name" ng-click="huan($index);save()">
+			</li>
+
+		</ul>
+	</div>
+	<div class="you" ng-init="xianshi=false">
+		<div class="xz" ng-class="younei.yanse" ng-click="xianshi=true">选项</div>
+		<div class="sou">
+			<div class="fangda">&#xe634</div>
+			<input type="text" value="搜索所有提醒">
+		</div>
+		<ul  class="neirong" ng-class="younei.yanse" ng-init="finn=false">
+				<h1>{{younei.name}}</h1>
+			<div  class="yiwan">
+				<div class="jiao" ng-click="zhuan();finn=!finn"></div>
+				<span class="ywc">已完成{{hjhj()}}项</span>
+			</div>
+                <div class="xuanxiang" ng-show="xianshi">
+					<div class="inner">
+						<input type="text" ng-model="younei.name" ng-class="younei.yanse" ng-blur="save()">
+						<p>列表颜色</p>
+						<ul class="neinei">
+							<li ng-repeat="c in yanse" class="{{c}}" ng-class="{act:c===younei.yanse}" ng-click="younei.yanse=c;save()"></li>
+						</ul>
+						<div class="shan" ng-click="del(younei.id);save();guandiao() ">删除</div>
+						<div class="qu" ng-click="xianshi=false">取消</div>
+						<div class="wan" ng-click="xianshi=false;save()">完成</div>
+					</div>
+
+				</div>
+<li class="lili" ng-repeat="v in younei.tudu | filter:{fin:false}" ng-show="finn" ng-init="gaizichu=false">
+	<div class="quan {{younei.yanse}}" ng-class="{wan:v.fin}" ng-click="v.fin=!v.fin;save()"></div>
+	<input ng-class="younei.yanse" type="text"  ng-blur="save();gaizichu=false" ng-model="v.name" ng-click="gaizichu=true">
+	<div class="gaizi" ng-class="younei.yanse" ng-show="gaizichu">
+	<div class="xuanze" ng-click="dell(v.id);save()">删除</div></div>
+	<div class="sandan" ng-click="dell(v.id);save()"></div>
+</li>
+
+			<div class="xian"></div>
+			<li ng-repeat="v in younei.tudu | filter:{fin:true}" ng-init="gaizichu=false">
+				<div class="quan {{younei.yanse}}" ng-class="{wan:v.fin}" ng-click="v.fin=!v.fin;save()"></div>
+				<input ng-class="younei.yanse" type="text"  ng-blur="save();gaizichu=false"  ng-model="v.name" ng-click="gaizichu=true">
+				<div class="gaizi" ng-class="younei.yanse" ng-show="gaizichu">
+				<div class="xuanze" ng-click="dell(v.id);save()">删除</div></div>
+
+				<div class="sandan" ng-click="dell(v.id);save()"></div>
+			</li>
+
+		</ul>
+		<div class="an" ng-click="tianjia(younei.id);save()"><span>新条目</span></div>
+	</div>
+
+</body>
+</html>
